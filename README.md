@@ -24,7 +24,7 @@ https://www.npmjs.com/package/microblink
 `Microblink.SDK.SetEndpoint('https://wt-XXXX.sandbox.auth0-extend.com/microblinkApiProxyExample');`   
 where `XXXX` is your Webtask identificator
 
-## Security issue explanation
+## Security issue notes
 
 To keep the Microblink API authorization header (API key and API secret) in the frontend single-page application (Angular, React, Vanilla JS, ...) it is **not safety** and **not recommended** and have the directly access to the endpoint `https://api.microblink.com/recognize/execute` from the client side because all JavaScript code is executing in the browser locally and anyone who have an access to your web application can get your credentials from the JS or HTML served code.  
 
