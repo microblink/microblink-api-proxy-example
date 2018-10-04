@@ -1,6 +1,12 @@
 # microblink-api-proxy-example
 Microblink API proxy Node.js Express application hosted as server less on Webtask.io
 
+## About
+
+This application is just an example how the Microblink API proxy should looks like and it is hosted on Webtask.io because of it's simplicity as serverless solution. With a little modification it can be easily hostend on the other serverless platforms: Amazon Lambda, Firebase Cloud Functions, etc.   
+
+Also with a few modification this simple Express application can be hostend on any Linux server with Node.js support or it can be rewritten in some other programming language: Java, PHP, Ruby, ... and also this simple endpoint `ENDPOINT + /recognize/execute` can be integrated to any other backend application.
+
 ## Requirements
 
 - Account on https://webtask.io/
@@ -17,12 +23,6 @@ https://www.npmjs.com/package/microblink
 4. To the frontend application add   
 `Microblink.SDK.SetEndpoint('https://wt-XXXX.sandbox.auth0-extend.com/microblinkApiProxyExample');`   
 where `XXXX` is your Webtask identificator
-
-## About
-
-This application is just an example how the Microblink API proxy should looks like and it is hosted on Webtask.io because of it's simplicity as serverless solution. With a little modification it can be easily hostend on the other serverless platforms: Amazon Lambda, Firebase Cloud Functions, etc.   
-
-Also with a few modification this simple Express application can be hostend on any Linux server with Node.js support or it can be rewritten in some other programming language: Java, PHP, Ruby, ... and also this simple endpoint `ENDPOINT + /recognize/execute` can be integrated to any other backend application.
 
 ## Security
 
