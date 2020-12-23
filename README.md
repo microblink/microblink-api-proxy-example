@@ -1,33 +1,36 @@
-# microblink-api-proxy-example
-Microblink API proxy Node.js Express application hosted as server less on Webtask.io
+# Microblink Backend Proxy Examples
 
-## About
+This repository contains examples of proxy applications that an API request would go through on its way to and from our **Cloud** or **Self-hosted** backend services.
 
-This application is just an example how the Microblink API proxy should looks like and it is hosted on Webtask.io because of it's simplicity as serverless solution. With a little modification it can be easily hostend on the other serverless platforms: Amazon Lambda, Firebase Cloud Functions, etc.   
+Remember that these examples are only here to provide you with a starting point when setting up your own proxy application — do not use them in production.
 
-Also with a few modification this simple Express application can be hostend on any Linux server with Node.js support or it can be rewritten in some other programming language: Java, PHP, Ruby, ... and also this simple endpoint `ENDPOINT + /recognize/execute` can be integrated to any other backend application.
+Once properly configured, a proxy app will act as a gateway between your web application and one of our backend solutions, either:
 
-## Requirements
+* [BlinkID Cloud API](https://microblink.com/products/blinkid/cloud-api)
+* [BlinkID Self-hosted API](https://microblink.com/products/blinkid/self-hosted-api)
+* [BlinkCard Self-hosted API](https://microblink.com/products/blinkcard/self-hosted-api)
+* [PDF417 Self-hosted API](https://microblink.com/products/blinkid/self-hosted-api)
 
-- Account on https://webtask.io/
-- Authorization header from Microblink dashboard https://microblink.com/customer/api
-- Frontend application with Microblink JS SDK   
-https://github.com/microblink/microblink-js   
-https://www.npmjs.com/package/microblink
+You can find the examples for Cloud API in the [cloud-api](cloud-api) directory, while the examples for Self-hosted API are located in the [self-hosted-api](self-hosted-api) directory.
 
-## Getting started
+## <a name="security"></a> Security
 
-1. Make an empty Webtask function in [Webtask Code Editor](https://webtask.io/make) with name `microblinkApiProxyExample`
-2. Copy the source of [microblink-api-proxy-example.js](./microblink-api-proxy-example.js) to the body of Webtask function
-3. Create secret variable in Webtask function `MICROBLINK_API_AUTHORIZATION_HEADER=*authorization header value from Microblink API dashboard*`
-4. To the frontend application add   
-`Microblink.SDK.SetEndpoint('https://wt-XXXX.sandbox.auth0-extend.com/microblinkApiProxyExample');`   
-where `XXXX` is your Webtask identificator
+The main purpose of a proxy application is to provide a security layer in front of the backend service.
 
-## Security issue notes
+Since the most common usage scenario is to call a backend service from a web application connected to a public network, it's important to protect the service from unauthorized requests.
 
-To keep the Microblink API authorization header (API key and API secret) in the frontend single-page application (Angular, React, Vanilla JS, ...) it is **not safety** and **not recommended** and have the directly access to the endpoint `https://api.microblink.com/recognize/execute` from the client side because all JavaScript code is executing in the browser locally and anyone who have an access to your web application can get your credentials from the JS or HTML served code.  
+When it comes to **Cloud API**, it's important to hide the authorization key from the end user. In the examples above, the authorization key is added to the request in the proxy application.
 
-Direct access to the Microblink API access from the frontend application is only recommended during the development to avoid the proxy network latency and make the development process faster and when your application is hostend locally and not available from the outside (public Internet).   
+Since **Self-hosted API** is usually integrated into existing backend ecosystems, you should implement the standard security mechanisms that are already in use.
 
-Nice explanation about this security issue is available in this [Codepen's blog post](https://codepen.io/iospadov/post/apis-and-authentication-keeping-your-access-keys-secure) and also in this [Quora's thread](https://www.quora.com/How-do-you-hide-protect-API-keys-when-you-have-to-use-them-in-client-side-JavaScript).
+### <a name="security-cors"></a> CORS
+
+[CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) is an additional security mechanism you can use to protect the backend service by defining which domains can send API requests to your backend.
+
+Keep in mind that CORS only works when end users are using front end applications inside major web browsers. Provided examples have sample code which shows how to define allowed domains.
+
+## <a name="custom-response"></a> Modification of response
+
+Another common use of a proxy application is to modify the response object returned to the front end.
+
+Provided Node.js examples have a simple logic that transforms a response from the back end service to only return what is necessary for a frontend to work as intended.
